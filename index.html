@@ -54,6 +54,7 @@
                     fontFamily: {
                         dancing: ['"Dancing Script"', 'cursive'],
                         nunito: ['"Nunito"', 'sans-serif'],
+                        times: ['"Times New Roman"', 'Times', 'serif'],
                     }
                 }
             }
@@ -342,13 +343,60 @@
         }
 
 
-        .text-stroke-black {
-            -webkit-text-stroke: 2px #111;
-            paint-order: stroke fill;
+        
+        
+
+    
+        @keyframes shimmer-sweep {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
-        .text-stroke-white {
-            -webkit-text-stroke: 2px #fff;
-            paint-order: stroke fill;
+        .text-shimmer {
+            position: relative;
+            background: linear-gradient(to bottom, #fef08a 0%, #d97706 48%, #fef9c3 52%, #eab308 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            z-index: 1;
+        }
+        .text-shimmer::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            color: transparent;
+            -webkit-text-stroke: 2px black;
+            text-shadow: 0px 6px 10px rgba(0,0,0,0.9);
+            width: 100%;
+            pointer-events: none;
+        }
+        
+        .text-shimmer-white {
+            position: relative;
+            background: linear-gradient(to bottom, #ffffff 0%, #94a3b8 48%, #ffffff 52%, #cbd5e1 100%);
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            z-index: 1;
+        }
+        .text-shimmer-white::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            color: transparent;
+            -webkit-text-stroke: 2px black;
+            text-shadow: 0px 5px 8px rgba(0,0,0,0.9);
+            width: 100%;
+            pointer-events: none;
         }
 
     </style>
@@ -457,13 +505,18 @@
             </div>
             
         </div>
+        
+        <!-- Footer / Tác giả -->
+        <div class="mt-4 text-center">
+            <p class="text-white/80 font-bold text-sm md:text-base tracking-widest drop-shadow-md uppercase">Tác giả Thầy Vũ Tiến Lực: Nguyễn Hữu Cảnh - TP Hồ Chí Minh</p>
+        </div>
     </div>
 
     <div id="celebration-screen" class="hidden absolute top-0 left-0 w-screen h-screen flex flex-col items-center justify-between pt-10 sm:pt-16 px-4 overflow-hidden">
         
         <!-- Thông tin lớp (Góc dưới bên trái) -->
-        <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-40 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] opacity-95">
-            <h3 id="display-classInfo" class="text-4xl md:text-[4rem] font-dancing text-yellow-300 font-black whitespace-nowrap text-stroke-black drop-shadow-[0_5px_5px_rgba(0,0,0,1)]">Lớp Toán - Thầy Lực - NHC</h3>
+        <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-40 pointer-events-none  opacity-95">
+            <h3 id="display-classInfo" class="text-4xl md:text-[4rem] font-dancing text-yellow-300 font-black whitespace-nowrap   text-shimmer">Lớp Toán - Thầy Lực - NHC</h3>
         </div>
 
         <!-- Nhóm điều khiển góc trên phải -->
@@ -499,7 +552,7 @@
         </div>
         
         <!-- Phụ kiện 3D cho học sinh chụp ảnh (Bên phải) -->
-        <div id="photoPropContainer" onmousedown="startDragProp(event)" ontouchstart="startDragProp(event)" class="hidden absolute top-[15%] right-[5%] md:right-[15%] z-50 flex flex-col items-center drop-shadow-[0_25px_25px_rgba(0,0,0,0.6)] cursor-move">
+        <div id="photoPropContainer" onmousedown="startDragProp(event)" ontouchstart="startDragProp(event)" class="hidden absolute top-[15%] right-[5%] md:right-[15%] z-50 flex flex-col items-center  cursor-move">
             
             <!-- Bóng đen hình người làm khung ngắm -->
             <div id="prop-silhouette" class="absolute top-[80px] md:top-[120px] left-1/2 -translate-x-1/2 opacity-70 mix-blend-multiply">
@@ -587,10 +640,10 @@
         </div>
         <!-- Typography -->
         <div class="z-10 text-center animate-[bounce_2s_ease-in-out_infinite] mt-12 md:mt-24 w-full">
-            <h1 class="font-dancing text-6xl md:text-[9rem] text-yellow-300 drop-shadow-[0_0_15px_rgba(250,204,21,0.6)] mb-2 md:mb-6">
+            <h1 class="font-dancing text-6xl md:text-[9rem] text-yellow-300  mb-2 md:mb-6">
                 Chúc Mừng Sinh Nhật
             </h1>
-            <h2 id="display-name" class="text-6xl md:text-[9rem] font-black text-white text-stroke-black uppercase tracking-wider w-full px-2 break-words leading-none drop-shadow-[0_8px_8px_rgba(0,0,0,1)]">
+            <h2 id="display-name" class="text-6xl md:text-[9rem] font-black text-white  uppercase tracking-wider w-full px-2 break-words leading-none  text-shimmer-white">
                 HỌC SINH
             </h2>
         </div>
@@ -653,7 +706,7 @@
 
             <!-- GIFT BOX -->
             <div class="flex flex-col items-center mb-4 scale-[1.3] md:scale-[1.8] origin-bottom transition-transform">
-                <div class="animate-bounce text-yellow-300 text-2xl font-black mb-4 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] pointer-events-none">
+                <div class="animate-bounce text-yellow-300 text-2xl font-black mb-4  pointer-events-none">
                     👇 Bấm Mở Quà! 👇
                 </div>
                 <div class="gift-wrapper" id="giftBox" onclick="openGift()">
@@ -730,6 +783,21 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderPrizes();
+            
+            const savedBg = localStorage.getItem('savedBackground');
+            if (savedBg) {
+                const body = document.getElementById('main-body');
+                body.style.backgroundImage = `url('${savedBg}')`;
+                body.style.backgroundSize = 'cover';
+                body.style.backgroundPosition = 'center';
+                
+                document.querySelectorAll('.theme-btn').forEach(btn => {
+                    btn.classList.remove('ring-4', 'ring-white');
+                    btn.classList.add('ring-0');
+                });
+                document.getElementById('btn-theme-upload').classList.remove('ring-0');
+                document.getElementById('btn-theme-upload').classList.add('ring-4', 'ring-white');
+            }
         });
 
         function renderPrizes() {
@@ -805,6 +873,11 @@
                     body.style.backgroundImage = `url('${e.target.result}')`;
                     body.style.backgroundSize = 'cover';
                     body.style.backgroundPosition = 'center';
+                    try {
+                        localStorage.setItem('savedBackground', e.target.result);
+                    } catch(err) {
+                        console.warn('Ảnh quá lớn để lưu vào local storage');
+                    }
                 }
                 reader.readAsDataURL(file);
             }
@@ -848,14 +921,19 @@
                 
                 const classInfoText = document.getElementById('classInfo').value.trim();
                 document.getElementById('display-classInfo').innerText = classInfoText;
+                document.getElementById('display-classInfo').setAttribute('data-text', classInfoText);
                 document.getElementById('display-name').innerText = nameInput.value.trim();
+                document.getElementById('display-name').setAttribute('data-text', nameInput.value.trim());
                 
                 document.getElementById('celebration-screen').classList.remove('hidden');
                 
                 const randomBgm = bgmUrls[Math.floor(Math.random() * bgmUrls.length)];
                 if(audio) { audio.pause(); audio = null; }
                 audio = new Audio(randomBgm);
-                audio.loop = true;
+                audio.addEventListener('ended', function() {
+                    audio.src = bgmUrls[Math.floor(Math.random() * bgmUrls.length)];
+                    audio.play();
+                });
                 audio.play().catch(e => console.log("Chưa thể tự động phát nhạc:", e));
                 isPlaying = true;
 
@@ -865,11 +943,22 @@
             } else {
                 // Award Mode
                 document.getElementById('display-school').innerText = document.getElementById('schoolName').value.trim();
-                document.getElementById('display-class').innerText = document.getElementById('className').value.trim();
+                document.getElementById('display-school').setAttribute('data-text', document.getElementById('schoolName').value.trim());
                 
-                document.getElementById('name-1').innerText = document.getElementById('rank1').value.trim() || "Quán Quân";
-                document.getElementById('name-2').innerText = document.getElementById('rank2').value.trim() || "Á Quân";
-                document.getElementById('name-3').innerText = document.getElementById('rank3').value.trim() || "Quý Quân";
+                document.getElementById('display-class').innerText = document.getElementById('className').value.trim();
+                document.getElementById('display-class').setAttribute('data-text', document.getElementById('className').value.trim());
+                
+                let rank1Txt = document.getElementById('rank1').value.trim() || "Quán Quân";
+                document.getElementById('name-1').innerText = rank1Txt;
+                document.getElementById('name-1').setAttribute('data-text', rank1Txt);
+                
+                let rank2Txt = document.getElementById('rank2').value.trim() || "Á Quân";
+                document.getElementById('name-2').innerText = rank2Txt;
+                document.getElementById('name-2').setAttribute('data-text', rank2Txt);
+                
+                let rank3Txt = document.getElementById('rank3').value.trim() || "Quý Quân";
+                document.getElementById('name-3').innerText = rank3Txt;
+                document.getElementById('name-3').setAttribute('data-text', rank3Txt);
 
                 document.getElementById('award-screen').classList.remove('hidden');
                 
@@ -877,7 +966,10 @@
                 const randomMusic = awardMusics[Math.floor(Math.random() * awardMusics.length)];
                 if(audio) { audio.pause(); audio = null; }
                 audio = new Audio(randomMusic);
-                audio.loop = true;
+                audio.addEventListener('ended', function() {
+                    audio.src = awardMusics[Math.floor(Math.random() * awardMusics.length)];
+                    audio.play();
+                });
                 audio.play().catch(e => console.log("Chưa thể tự động phát nhạc:", e));
                 isPlaying = true;
 
@@ -927,15 +1019,19 @@
         }
 
         function toggleMusic() {
-            const audio = document.getElementById('bgm');
-            if (isMusicPlaying) {
+            if (audio) {
                 audio.pause();
-                isMusicPlaying = false;
-            } else {
+                let newUrl = "";
+                if (currentMode === 'birthday') {
+                    newUrl = bgmUrls[Math.floor(Math.random() * bgmUrls.length)];
+                } else {
+                    newUrl = awardMusics[Math.floor(Math.random() * awardMusics.length)];
+                }
+                audio.src = newUrl;
                 audio.play();
-                isMusicPlaying = true;
+                isPlaying = true;
+                updateMusicBtnUI();
             }
-            updateMusicBtnUI();
         }
 
         function updateMusicBtnUI() {
@@ -945,7 +1041,7 @@
             const awardIconOn = document.getElementById('awardMusicIconOn');
             const awardIconOff = document.getElementById('awardMusicIconOff');
             
-            if (isMusicPlaying) {
+            if (isPlaying) {
                 if(iconOn) { iconOn.classList.remove('hidden'); iconOff.classList.add('hidden'); }
                 if(awardIconOn) { awardIconOn.classList.remove('hidden'); awardIconOff.classList.add('hidden'); }
                 btn.classList.add('music-btn-active');
@@ -1243,9 +1339,9 @@
         </div>
 
         <!-- Tiêu đề Trường & Lớp -->
-        <div class="z-30 text-center mt-2 md:mt-8 w-full animate-[floatUpAndDown_4s_ease-in-out_infinite]">
-            <h1 id="display-school" class="text-5xl md:text-[5rem] font-black text-yellow-400 text-stroke-black drop-shadow-[0_8px_8px_rgba(0,0,0,1)] tracking-widest uppercase mb-4 leading-tight">Trường THPT Nguyễn Hữu Cảnh</h1>
-            <h2 id="display-class" class="text-4xl md:text-[4rem] font-bold text-white text-stroke-black drop-shadow-[0_8px_8px_rgba(0,0,0,1)] tracking-wide">Lớp Toán Thầy Vũ Tiến Lực</h2>
+        <div class="z-30 text-center mt-2 md:mt-8 w-full">
+            <h1 id="display-school" class="text-5xl md:text-[5rem] font-times font-bold text-shimmer   tracking-widest uppercase mb-4 leading-tight">Trường THPT Nguyễn Hữu Cảnh</h1>
+            <h2 id="display-class" class="text-4xl md:text-[4rem] font-times font-bold text-shimmer-white   tracking-wide">Lớp Toán Thầy Vũ Tiến Lực</h2>
         </div>
 
         <!-- Bục nhận giải (Podium) -->
@@ -1254,7 +1350,7 @@
             <!-- Hạng 2 -->
             <div class="flex flex-col items-center w-1/3 max-w-[250px]">
                 <div class="medal text-6xl md:text-8xl mb-2 opacity-0 transition-opacity duration-1000 delay-500" id="medal-2">🥈</div>
-                <div class="text-3xl md:text-[3rem] font-bold text-white text-stroke-black mb-4 text-center drop-shadow-[0_8px_8px_rgba(0,0,0,1)] opacity-0 transition-opacity duration-1000 delay-500 line-clamp-2 leading-tight" id="name-2">Á Quân</div>
+                <div class="text-3xl md:text-[3rem] font-times font-bold text-shimmer-white  mb-4 text-center  opacity-0 transition-opacity duration-1000 delay-500 line-clamp-2 leading-tight" id="name-2">Á Quân</div>
                 <div class="podium-step podium-2 w-full shadow-2xl" id="podium-2">
                     <span class="text-4xl md:text-6xl font-black text-gray-800 opacity-60">2</span>
                 </div>
@@ -1263,7 +1359,7 @@
             <!-- Hạng 1 -->
             <div class="flex flex-col items-center w-1/3 max-w-[300px] z-10">
                 <div class="medal text-7xl md:text-[9rem] mb-2 opacity-0 transition-opacity duration-1000 delay-1000" id="medal-1">👑</div>
-                <div class="text-4xl md:text-[4.5rem] font-black text-yellow-300 text-stroke-black mb-6 text-center drop-shadow-[0_10px_10px_rgba(0,0,0,1)] opacity-0 transition-opacity duration-1000 delay-1000 line-clamp-2 leading-tight" id="name-1">Quán Quân</div>
+                <div class="text-4xl md:text-[4.5rem] font-times font-bold text-shimmer  mb-6 text-center  opacity-0 transition-opacity duration-1000 delay-1000 line-clamp-2 leading-tight" id="name-1">Quán Quân</div>
                 <div class="podium-step podium-1 w-full shadow-2xl" id="podium-1">
                     <span class="text-5xl md:text-7xl font-black text-yellow-900 opacity-60">1</span>
                 </div>
@@ -1272,7 +1368,7 @@
             <!-- Hạng 3 -->
             <div class="flex flex-col items-center w-1/3 max-w-[250px]">
                 <div class="medal text-6xl md:text-8xl mb-2 opacity-0 transition-opacity duration-1000" id="medal-3">🥉</div>
-                <div class="text-3xl md:text-[3rem] font-bold text-white text-stroke-black mb-4 text-center drop-shadow-[0_8px_8px_rgba(0,0,0,1)] opacity-0 transition-opacity duration-1000 line-clamp-2 leading-tight" id="name-3">Quý Quân</div>
+                <div class="text-3xl md:text-[3rem] font-times font-bold text-shimmer-white  mb-4 text-center  opacity-0 transition-opacity duration-1000 line-clamp-2 leading-tight" id="name-3">Quý Quân</div>
                 <div class="podium-step podium-3 w-full shadow-2xl" id="podium-3">
                     <span class="text-4xl md:text-6xl font-black text-orange-900 opacity-60">3</span>
                 </div>
